@@ -8,7 +8,7 @@
 namespace DS {
 	template <class T>
 	class vector {
-		
+
 	};
 } // DS
 
