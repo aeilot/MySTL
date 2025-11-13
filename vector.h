@@ -10,13 +10,15 @@ namespace MySTL::DS {
 	template <class T>
 	requires (MySTL::Copy<T> || MySTL::Move<T>)
 	class vector {
-		int size;
+		int sz;
+		T* data;
 	public:
-		vector(): size(0) {
-
+		vector(): sz(0), data(nullptr) {
 		}
 
-
+		int size() const {
+			return this->sz;
+		}
 	};
 } // DS
 
