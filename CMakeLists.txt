@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(ds)
+project(my_stl)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -15,16 +15,16 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 
-add_executable(ds test.cpp
-        LinkedList.cpp
-        LinkedList.h
+add_executable(my_stl test.cpp
+        ds_pro/LinkedList.cpp
+        ds_pro/LinkedList.h
         vector.cpp
         vector.h)
 
 target_link_libraries(
-        ds
+        my_stl
         GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(ds)
+gtest_discover_tests(my_stl)
