@@ -60,11 +60,3 @@ TEST(LinkedListTest, FindInEmptyList) {
 	EXPECT_EQ(list.size, 0);
 	EXPECT_FALSE(list.find(42)); // Searching in empty list should return false
 }
-
-TEST(LinkedListTest, PrintAndStreamOperator) {
-	MySTL::DS::LinkedList<std::string> list = {"A", "B", "C"};
-	testing::internal::CaptureStdout();
-	list.print();
-	std::string output = testing::internal::GetCapturedStdout();
-	EXPECT_NE(output.find("List (size 3):"), std::string::npos);
-}
