@@ -5,7 +5,7 @@
 
 
 TEST(LinkedListTest, DefaultConstructorAndPushBack) {
-	DS::LinkedList<std::string> list;
+	MySTL::DS::LinkedList<std::string> list;
 	EXPECT_EQ(list.size, 0);
 	list.push_back("Hello");
 	list.push_back("World");
@@ -16,7 +16,7 @@ TEST(LinkedListTest, DefaultConstructorAndPushBack) {
 }
 
 TEST(LinkedListTest, InitializerListConstructor) {
-	DS::LinkedList<int> list = {1, 2, 3, 4, 5};
+	MySTL::DS::LinkedList<int> list = {1, 2, 3, 4, 5};
 	EXPECT_EQ(list.size, 5);
 	for (int i = 1; i <= 5; ++i) {
 		EXPECT_TRUE(list.find(i));
@@ -25,7 +25,7 @@ TEST(LinkedListTest, InitializerListConstructor) {
 }
 
 TEST(LinkedListTest, RemoveAt) {
-	DS::LinkedList<int> list = {10, 20, 30, 40, 50};
+	MySTL::DS::LinkedList<int> list = {10, 20, 30, 40, 50};
 	EXPECT_EQ(list.size, 5);
 	list.removeAt(2); // Remove element with id 2 (data 30)
 	EXPECT_EQ(list.size, 4);
@@ -41,7 +41,7 @@ TEST(LinkedListTest, RemoveAt) {
 }
 
 TEST(LinkedListTest, SingleElementConstructor) {
-	DS::LinkedList<double> list(3.14);
+	MySTL::DS::LinkedList<double> list(3.14);
 	EXPECT_EQ(list.size, 1);
 	EXPECT_TRUE(list.find(3.14));
 	list.push_back(6.28);
@@ -50,13 +50,21 @@ TEST(LinkedListTest, SingleElementConstructor) {
 }
 
 TEST(LinkedListTest, RemoveFromEmptyList) {
-	DS::LinkedList<char> list;
+	MySTL::DS::LinkedList<char> list;
 	EXPECT_EQ(list.size, 0);
 	list.removeAt(0); // Attempt to remove from empty list
 	EXPECT_EQ(list.size, 0); // Size should remain unchanged
 }
 TEST(LinkedListTest, FindInEmptyList) {
-	DS::LinkedList<int> list;
+	MySTL::DS::LinkedList<int> list;
 	EXPECT_EQ(list.size, 0);
 	EXPECT_FALSE(list.find(42)); // Searching in empty list should return false
+}
+
+TEST(LinkedListTest, PrintAndStreamOperator) {
+	MySTL::DS::LinkedList<std::string> list = {"A", "B", "C"};
+	testing::internal::CaptureStdout();
+	list.print();
+	std::string output = testing::internal::GetCapturedStdout();
+	EXPECT_NE(output.find("List (size 3):"), std::string::npos);
 }

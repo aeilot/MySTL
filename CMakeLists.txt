@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(my_stl)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -16,10 +16,7 @@ enable_testing()
 
 
 add_executable(my_stl test.cpp
-        ds_pro/LinkedList.cpp
-        ds_pro/LinkedList.h
-        vector.cpp
-        vector.h)
+)
 
 target_link_libraries(
         my_stl
