@@ -73,8 +73,11 @@ namespace MySTL::DS {
 		 *
 		 * @param rhs The vector to move from.
 		 */
-		Vec(const Vec &&rhs) noexcept {
-			this = move(rhs);
+		Vec(Vec&& rhs) noexcept
+			: sz(rhs.sz), data(rhs.data)
+		{
+			rhs.sz = 0;
+			rhs.data = nullptr;
 		}
 
 		/**
@@ -106,6 +109,41 @@ namespace MySTL::DS {
 			}
 			return this->data[index];
 		}
+
+		const T& operator[](size_t index) const {
+			if (index >= this->sz) {
+				throw std::out_of_range("Index out of range");
+			}
+			return this->data[index];
+		}
+
+		Vec& operator=(const Vec &rhs) {
+			if (this == &rhs) {
+				return *this;
+			}
+			T* new_data = new T[rhs.sz];
+			for (int i = 0; i < rhs.sz; i++) {
+				new_data[i] = rhs.data[i];
+			}
+			delete[] this->data;
+			this->data = new_data;
+			this->sz = rhs.sz;
+
+			return *this;
+		}
+
+		Vec& operator=(Vec &&rhs) {
+			if (this == &rhs) {
+				return *this;
+			}
+			delete[] this->data;
+			this->data = rhs.data;
+			this->sz = rhs.sz;
+			rhs.data = nullptr;
+			rhs.sz = 0;
+			return *this;
+		}
+
 
 		/**
 		 * @brief Resizes the vector to the specified size.

@@ -125,6 +125,56 @@ TEST(VectorTest, ReserveFunction) {
 	EXPECT_EQ(vec.size(), 0); // Size should remain 0 after reserve
 }
 
+
+TEST(VectorTest, MoveConstructor) {
+	MySTL::DS::Vec<int> vec1 = {1, 2, 3, 4, 5};
+	MySTL::DS::Vec<int> vec2 = std::move(vec1); // Move constructor
+	EXPECT_EQ(vec2.size(), 5);
+	for (int i = 0; i < vec2.size(); ++i) {
+		EXPECT_EQ(vec2[i], i + 1);
+	}
+	EXPECT_EQ(vec1.size(), 0); // vec1 should be empty after move
+}
+
+TEST(VectorTest, MoveAssignmentOperator) {
+	MySTL::DS::Vec<int> vec1 = {1, 2, 3, 4, 5};
+	MySTL::DS::Vec<int> vec2;
+	vec2 = std::move(vec1); // Move assignment operator
+	EXPECT_EQ(vec2.size(), 5);
+	for (int i = 0; i < vec2.size(); ++i) {
+		EXPECT_EQ(vec2[i], i + 1);
+	}
+	EXPECT_EQ(vec1.size(), 0); // vec1 should be empty after move
+}
+
+TEST(VectorTest, CopyAssignmentOperator) {
+	MySTL::DS::Vec<int> vec1 = {1, 2, 3, 4, 5};
+	MySTL::DS::Vec<int> vec2;
+	vec2 = vec1; // Copy assignment operator
+	EXPECT_EQ(vec2.size(), 5);
+	for (int i = 0; i < vec2.size(); ++i) {
+		EXPECT_EQ(vec2[i], vec1[i]);
+	}
+}
+
+TEST(VectorTest, SelfAssignment) {
+	MySTL::DS::Vec<int> vec = {1, 2, 3, 4, 5};
+	vec = vec; // Self-assignment
+	EXPECT_EQ(vec.size(), 5);
+	for (int i = 0; i < vec.size(); ++i) {
+		EXPECT_EQ(vec[i], i + 1);
+	}
+}
+
+TEST(VectorTest, MoveSelfAssignment) {
+	MySTL::DS::Vec<int> vec = {1, 2, 3, 4, 5};
+	vec = std::move(vec); // Move self-assignment
+	EXPECT_EQ(vec.size(), 5);
+	for (int i = 0; i < vec.size(); ++i) {
+		EXPECT_EQ(vec[i], i + 1);
+	}
+}
+
 TEST(ConceptTest, CopyConcept) {
 	static_assert(MySTL::Copy<int>, "int should satisfy Copy concept");
 	static_assert(MySTL::Copy<std::string>, "std::string should satisfy Copy concept");
@@ -208,6 +258,60 @@ TEST(ArrayTests, MapFunctionWithInvalidRangeThrows) {
     MySTL::DS::Array<int, 5> arr;
     EXPECT_THROW(arr.map(6, 7, [](int &x) {}), std::out_of_range);
     EXPECT_THROW(arr.map(4, 2, [](int &x) {}), std::out_of_range);
+}
+
+TEST(ArrayTest, CopyConstructor) {
+	MySTL::DS::Array<int, 3> arr1;
+	arr1[0] = 1;
+	arr1[1] = 2;
+	arr1[2] = 3;
+
+	MySTL::DS::Array<int, 3> arr2 = arr1; // Copy constructor
+
+	EXPECT_EQ(arr2[0], 1);
+	EXPECT_EQ(arr2[1], 2);
+	EXPECT_EQ(arr2[2], 3);
+}
+
+TEST(ArrayTest, MoveConstructor) {
+	MySTL::DS::Array<int, 3> arr1;
+	arr1[0] = 1;
+	arr1[1] = 2;
+	arr1[2] = 3;
+
+	MySTL::DS::Array<int, 3> arr2 = std::move(arr1); // Move constructor
+
+	EXPECT_EQ(arr2[0], 1);
+	EXPECT_EQ(arr2[1], 2);
+	EXPECT_EQ(arr2[2], 3);
+}
+
+TEST(ArrayTest, AssignmentOperator) {
+	MySTL::DS::Array<int, 3> arr1;
+	arr1[0] = 1;
+	arr1[1] = 2;
+	arr1[2] = 3;
+
+	MySTL::DS::Array<int, 3> arr2;
+	arr2 = arr1; // Assignment operator
+
+	EXPECT_EQ(arr2[0], 1);
+	EXPECT_EQ(arr2[1], 2);
+	EXPECT_EQ(arr2[2], 3);
+}
+
+TEST(ArrayTest, MoveAssignmentOperator) {
+	MySTL::DS::Array<int, 3> arr1;
+	arr1[0] = 1;
+	arr1[1] = 2;
+	arr1[2] = 3;
+
+	MySTL::DS::Array<int, 3> arr2;
+	arr2 = std::move(arr1); // Move assignment operator
+
+	EXPECT_EQ(arr2[0], 1);
+	EXPECT_EQ(arr2[1], 2);
+	EXPECT_EQ(arr2[2], 3);
 }
 
 int main(int argc, char **argv) {

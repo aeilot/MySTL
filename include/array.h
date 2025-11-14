@@ -33,6 +33,17 @@ namespace MySTL {
 				data = new T[N];
 			}
 
+			Array(Array &rhs) noexcept {
+				data = new T[N];
+				for (size_t i = 0; i < N; i++) {
+					this->data[i] = rhs.data[i];
+				}
+			}
+
+			Array(Array &&rhs) noexcept : data(rhs.data) {
+				rhs.data = nullptr;
+			}
+
 			/**
 			 * @brief Returns the size of the array.
 			 *
@@ -54,6 +65,36 @@ namespace MySTL {
 					throw std::out_of_range("Array index out of range");
 				}
 				return data[i];
+			}
+
+			const T& operator[](size_t index) const {
+				if (index < 0 || index >= N) {
+					throw std::out_of_range("Index out of range");
+				}
+				return this->data[index];
+			}
+
+			Array& operator=(const Array &rhs) {
+				if (this == &rhs) {
+					return *this;
+				}
+				T* new_data = new T[N];
+				for (int i = 0; i < N; i++) {
+					new_data[i] = rhs.data[i];
+				}
+				delete[] this->data;
+				this->data = new_data;
+				return *this;
+			}
+
+			Array& operator=(Array &&rhs) {
+				if (this == &rhs) {
+					return *this;
+				}
+				delete[] this->data;
+				this->data = rhs.data;
+				rhs.data = nullptr;
+				return *this;
 			}
 
 			/**
