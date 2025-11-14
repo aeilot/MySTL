@@ -16,7 +16,7 @@ enable_testing()
 
 
 add_executable(my_stl test.cpp
-        array.h)
+        include/array.h)
 
 target_link_libraries(
         my_stl

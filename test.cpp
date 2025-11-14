@@ -1,12 +1,11 @@
 #include <iostream>
 #include <string>
-#include "ds_pro/LinkedList.h"
-#include "Vec.h"
-#include "concepts.h"
 #include <gtest/gtest.h>
 
-#include "array.h"
-
+#include "include/LinkedList.h"
+#include "include/Vec.h"
+#include "include/concepts.h"
+#include "include/array.h"
 
 TEST(LinkedListTest, DefaultConstructorAndPushBack) {
 	MySTL::DS::LinkedList<std::string> list;

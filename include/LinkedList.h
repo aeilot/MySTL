@@ -6,7 +6,7 @@
 #define DS_LINKEDLIST_H
 #include <iostream>
 #include <memory>
-#include "../concepts.h"
+#include "concepts.h"
 
 namespace MySTL {
 	namespace DS {
