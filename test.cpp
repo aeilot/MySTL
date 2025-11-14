@@ -102,6 +102,28 @@ TEST(VectorTest, MapFunction) {
 	EXPECT_EQ(vec[4], 5);
 }
 
+TEST(VectorTest, ResizeFunction) {
+	MySTL::DS::vector<int> vec = {1, 2, 3};
+	vec.resize(5);
+	EXPECT_EQ(vec.size(), 5);
+	EXPECT_EQ(vec[0], 1);
+	EXPECT_EQ(vec[1], 2);
+	EXPECT_EQ(vec[2], 3);
+	// New elements are default-initialized
+	EXPECT_EQ(vec[3], 0);
+	EXPECT_EQ(vec[4], 0);
+	vec.resize(2);
+	EXPECT_EQ(vec.size(), 2);
+	EXPECT_EQ(vec[0], 1);
+	EXPECT_EQ(vec[1], 2);
+}
+
+TEST(VectorTest, ReserveFunction) {
+	MySTL::DS::vector<int> vec;
+	vec.reserve(10);
+	EXPECT_EQ(vec.size(), 0); // Size should remain 0 after reserve
+}
+
 TEST(ConceptTest, CopyConcept) {
 	static_assert(MySTL::Copy<int>, "int should satisfy Copy concept");
 	static_assert(MySTL::Copy<std::string>, "std::string should satisfy Copy concept");

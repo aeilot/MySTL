@@ -14,7 +14,10 @@ namespace MySTL::DS {
 		int sz;
 		T* data;
 	public:
-		vector(): sz(0), data(nullptr) {
+		vector() : sz(0), data(nullptr) {}
+
+		void reserve(int sz) {
+			this->data = new T[sz];
 		}
 
 		vector(int sz) : sz(sz) {
@@ -52,6 +55,18 @@ namespace MySTL::DS {
 				throw std::out_of_range("Index out of range");
 			}
 			return this->data[index];
+		}
+
+		void resize(int count) {
+			if (count <= sz) {
+				this->sz = count;
+				return;
+			}
+			T* newD = new T[count];
+			memcpy(newD, data, sizeof(T) * sz);
+			delete[] data;
+			this->data = newD;
+			this->sz = count;
 		}
 
 		void map(int from, int to, void(*f)(T&)) {
