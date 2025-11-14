@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "ds_pro/LinkedList.h"
-#include "vector.h"
+#include "Vec.h"
 #include "concepts.h"
 #include <gtest/gtest.h>
 
@@ -64,12 +64,12 @@ TEST(LinkedListTest, FindInEmptyList) {
 }
 
 TEST(VectorTest, DefaultConstructorAndSize) {
-	MySTL::DS::vector<int> vec;
+	MySTL::DS::Vec<int> vec;
 	EXPECT_EQ(vec.size(), 0);
 }
 
 TEST(VectorTest, InitializerListConstructor) {
-	MySTL::DS::vector<std::string> vec = {"Hello", "World", "!"};
+	MySTL::DS::Vec<std::string> vec = {"Hello", "World", "!"};
 	EXPECT_EQ(vec.size(), 3);
 	EXPECT_EQ(vec[0], "Hello");
 	EXPECT_EQ(vec[1], "World");
@@ -77,8 +77,8 @@ TEST(VectorTest, InitializerListConstructor) {
 }
 
 TEST(VectorTest, CopyConstructor) {
-	MySTL::DS::vector<int> vec1 = {1, 2, 3, 4, 5};
-	MySTL::DS::vector<int> vec2 = vec1; // Copy constructor
+	MySTL::DS::Vec<int> vec1 = {1, 2, 3, 4, 5};
+	MySTL::DS::Vec<int> vec2 = vec1; // Copy constructor
 	EXPECT_EQ(vec2.size(), 5);
 	for (int i = 0; i < vec2.size(); ++i) {
 		EXPECT_EQ(vec2[i], vec1[i]);
@@ -86,13 +86,13 @@ TEST(VectorTest, CopyConstructor) {
 }
 
 TEST(VectorTest, ElementAccessOutOfRange) {
-	MySTL::DS::vector<int> vec = {10, 20, 30};
+	MySTL::DS::Vec<int> vec = {10, 20, 30};
 	EXPECT_THROW(vec[-1], std::out_of_range);
 	EXPECT_THROW(vec[3], std::out_of_range);
 }
 
 TEST(VectorTest, MapFunction) {
-	MySTL::DS::vector<int> vec = {1, 2, 3, 4, 5};
+	MySTL::DS::Vec<int> vec = {1, 2, 3, 4, 5};
 	auto increment = [](int& x) { x += 1; };
 	vec.map(1, 4, increment); // Increment elements at indices 1, 2, 3
 	EXPECT_EQ(vec[0], 1);
@@ -103,7 +103,7 @@ TEST(VectorTest, MapFunction) {
 }
 
 TEST(VectorTest, ResizeFunction) {
-	MySTL::DS::vector<int> vec = {1, 2, 3};
+	MySTL::DS::Vec<int> vec = {1, 2, 3};
 	vec.resize(5);
 	EXPECT_EQ(vec.size(), 5);
 	EXPECT_EQ(vec[0], 1);
@@ -119,7 +119,7 @@ TEST(VectorTest, ResizeFunction) {
 }
 
 TEST(VectorTest, ReserveFunction) {
-	MySTL::DS::vector<int> vec;
+	MySTL::DS::Vec<int> vec;
 	vec.reserve(10);
 	EXPECT_EQ(vec.size(), 0); // Size should remain 0 after reserve
 }
