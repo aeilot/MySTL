@@ -15,7 +15,8 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 
-add_executable(my_stl test.cpp)
+add_executable(my_stl test.cpp
+        array.h)
 
 target_link_libraries(
         my_stl

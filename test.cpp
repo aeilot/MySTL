@@ -5,6 +5,8 @@
 #include "concepts.h"
 #include <gtest/gtest.h>
 
+#include "array.h"
+
 
 TEST(LinkedListTest, DefaultConstructorAndPushBack) {
 	MySTL::DS::LinkedList<std::string> list;
@@ -152,6 +154,61 @@ TEST(ConceptTest, OrderedConcept) {
 		NonOrdered() = default;
 	};
 	static_assert(!MySTL::Ord<NonOrdered>, "NonOrdered should not satisfy Ordered concept");
+}
+
+TEST(ArrayTests, DefaultConstructorInitializesArray) {
+    MySTL::DS::Array<int, 5> arr;
+    EXPECT_EQ(arr.size(), 5);
+}
+
+TEST(ArrayTests, AccessElementWithinBounds) {
+    MySTL::DS::Array<int, 3> arr;
+    arr[0] = 10;
+    arr[1] = 20;
+    arr[2] = 30;
+    EXPECT_EQ(arr[0], 10);
+    EXPECT_EQ(arr[1], 20);
+    EXPECT_EQ(arr[2], 30);
+}
+
+TEST(ArrayTests, AccessElementOutOfBoundsThrows) {
+    MySTL::DS::Array<int, 3> arr;
+    EXPECT_THROW(arr[3], std::out_of_range);
+    EXPECT_THROW(arr[-1], std::out_of_range);
+}
+
+TEST(ArrayTests, MapFunctionAppliesToAllElements) {
+    MySTL::DS::Array<int, 3> arr;
+    arr[0] = 1;
+    arr[1] = 2;
+    arr[2] = 3;
+
+    arr.map([](int &x) { x *= 2; });
+
+    EXPECT_EQ(arr[0], 2);
+    EXPECT_EQ(arr[1], 4);
+    EXPECT_EQ(arr[2], 6);
+}
+
+TEST(ArrayTests, MapFunctionWithRangeAppliesToSubset) {
+    MySTL::DS::Array<int, 5> arr;
+    for (size_t i = 0; i < arr.size(); ++i) {
+        arr[i] = i + 1;
+    }
+
+    arr.map(1, 4, [](int &x) { x *= 3; });
+
+    EXPECT_EQ(arr[0], 1);
+    EXPECT_EQ(arr[1], 6);
+    EXPECT_EQ(arr[2], 9);
+    EXPECT_EQ(arr[3], 12);
+    EXPECT_EQ(arr[4], 5);
+}
+
+TEST(ArrayTests, MapFunctionWithInvalidRangeThrows) {
+    MySTL::DS::Array<int, 5> arr;
+    EXPECT_THROW(arr.map(6, 7, [](int &x) {}), std::out_of_range);
+    EXPECT_THROW(arr.map(4, 2, [](int &x) {}), std::out_of_range);
 }
 
 int main(int argc, char **argv) {
