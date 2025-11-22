@@ -1,0 +1,5 @@
+if(EXISTS "/Users/aeilot/Developer/my_stl/build/my_stl[1]_tests.cmake")
+  include("/Users/aeilot/Developer/my_stl/build/my_stl[1]_tests.cmake")
+else()
+  add_test(my_stl_NOT_BUILT my_stl_NOT_BUILT)
+endif()

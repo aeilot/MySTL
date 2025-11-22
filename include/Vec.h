@@ -17,22 +17,32 @@ namespace MySTL::DS {
 	class Vec {
 	private:
 		size_t sz; ///< The current size of the vector.
+		size_t cap; ///< The current capacity of the vector.
 		T *data; ///< Pointer to the dynamically allocated array of elements.
 
 	public:
 		/**
 		 * @brief Default constructor. Initializes an empty vector.
 		 */
-		Vec() : sz(0), data(nullptr) {
+		Vec() : sz(0), cap(0), data(nullptr) {
 		}
 
 		/**
 		 * @brief Allocates memory for the specified number of elements.
 		 *
-		 * @param sz The number of elements to reserve memory for.
+		 * @param new_cap The number of elements to reserve memory for.
 		 */
-		void reserve(size_t sz) {
-			this->data = new T[sz];
+		void reserve(size_t new_cap) {
+			if (new_cap <= cap) {
+				return;
+			}
+			T* new_data = new T[new_cap];
+			for (size_t i = 0; i < sz; i++) {
+				new_data[i] = std::move(data[i]);
+			}
+			delete[] data;
+			data = new_data;
+			cap = new_cap;
 		}
 
 		/**
@@ -40,7 +50,7 @@ namespace MySTL::DS {
 		 *
 		 * @param sz The size of the vector.
 		 */
-		Vec(size_t sz) : sz(sz) {
+		Vec(size_t sz) : sz(sz), cap(sz) {
 			this->data = new T[sz];
 		}
 
@@ -49,7 +59,7 @@ namespace MySTL::DS {
 		 *
 		 * @param init The initializer list to construct the vector from.
 		 */
-		Vec(std::initializer_list<T> init) : sz(init.size()) {
+		Vec(std::initializer_list<T> init) : sz(init.size()), cap(init.size()) {
 			this->data = new T[init.size()];
 			for (size_t i = 0; i < sz; i++) {
 				this->data[i] = *(init.begin() + i);
@@ -61,8 +71,8 @@ namespace MySTL::DS {
 		 *
 		 * @param rhs The vector to copy from.
 		 */
-		Vec(const Vec &rhs) : sz(rhs.sz) {
-			this->data = new T[rhs.sz];
+		Vec(const Vec &rhs) : sz(rhs.sz), cap(rhs.cap) {
+			this->data = new T[rhs.cap];
 			for (size_t i = 0; i < rhs.sz; i++) {
 				this->data[i] = rhs.data[i];
 			}
@@ -74,9 +84,10 @@ namespace MySTL::DS {
 		 * @param rhs The vector to move from.
 		 */
 		Vec(Vec&& rhs) noexcept
-			: sz(rhs.sz), data(rhs.data)
+			: sz(rhs.sz), cap(rhs.cap), data(rhs.data)
 		{
 			rhs.sz = 0;
+			rhs.cap = 0;
 			rhs.data = nullptr;
 		}
 
@@ -94,6 +105,15 @@ namespace MySTL::DS {
 		 */
 		size_t size() const {
 			return this->sz;
+		}
+
+		/**
+		 * @brief Returns the current capacity of the vector.
+		 *
+		 * @return The capacity of the vector.
+		 */
+		size_t capacity() const {
+			return this->cap;
 		}
 
 		/**
@@ -121,13 +141,14 @@ namespace MySTL::DS {
 			if (this == &rhs) {
 				return *this;
 			}
-			T* new_data = new T[rhs.sz];
-			for (int i = 0; i < rhs.sz; i++) {
+			T* new_data = new T[rhs.cap];
+			for (size_t i = 0; i < rhs.sz; i++) {
 				new_data[i] = rhs.data[i];
 			}
 			delete[] this->data;
 			this->data = new_data;
 			this->sz = rhs.sz;
+			this->cap = rhs.cap;
 
 			return *this;
 		}
@@ -139,8 +160,10 @@ namespace MySTL::DS {
 			delete[] this->data;
 			this->data = rhs.data;
 			this->sz = rhs.sz;
+			this->cap = rhs.cap;
 			rhs.data = nullptr;
 			rhs.sz = 0;
+			rhs.cap = 0;
 			return *this;
 		}
 
@@ -155,10 +178,15 @@ namespace MySTL::DS {
 				this->sz = count;
 				return;
 			}
-			T *newD = new T[count];
-			memcpy(newD, data, sizeof(T) * sz);
-			delete[] data;
-			this->data = newD;
+			if (count > cap) {
+				T *newD = new T[count];
+				for (size_t i = 0; i < sz; i++) {
+					newD[i] = std::move(data[i]);
+				}
+				delete[] data;
+				this->data = newD;
+				this->cap = count;
+			}
 			this->sz = count;
 		}
 
