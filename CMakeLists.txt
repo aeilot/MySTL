@@ -19,6 +19,8 @@ add_executable(my_stl test.cpp
         include/stack.h
         include/queue.h
         include/deque.h
+        include/map.h
+        include/dsu.h
 )
 
 target_link_libraries(

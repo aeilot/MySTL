@@ -3,6 +3,8 @@
 #include "include/queue.h"
 #include "include/stack.h"
 #include "include/deque.h"
+#include "include/map.h"
+#include "include/dsu.h"
 
 TEST(StackTests, EmptyOnNewStack) {
 	DS::Stack<int> stack(2);
@@ -132,6 +134,65 @@ TEST(DequeTests, GrowsWhenPushingBackBeyondInitialCapacity) {
 	EXPECT_EQ(deque.pop_front(), 1);
 	EXPECT_EQ(deque.pop_front(), 2);
 	EXPECT_EQ(deque.pop_front(), 3);
+}
+
+TEST(MapTests, EmptyFindReturnsNullopt) {
+	DS::Map<int> map;
+	EXPECT_EQ(map.find(1), std::nullopt);
+}
+
+TEST(MapTests, WriteThenFindReturnsValue) {
+	DS::Map<int> map;
+	map.write(42, 99);
+	EXPECT_EQ(map.find(42), std::optional<int>(99));
+}
+
+TEST(MapTests, WriteUpdatesExistingKey) {
+	DS::Map<int> map;
+	map.write(7, 1);
+	map.write(7, 2);
+	EXPECT_EQ(map.find(7), std::optional<int>(2));
+}
+
+TEST(MapTests, HandlesCollisionChain) {
+	DS::Map<int> map;
+	int key1 = 5;
+	int key2 = key1 + DS::capacity;
+	map.write(key1, 10);
+	map.write(key2, 20);
+	EXPECT_EQ(map.find(key1), std::optional<int>(10));
+	EXPECT_EQ(map.find(key2), std::optional<int>(20));
+}
+
+TEST(DSUTests, NewSetsAreDistinct) {
+	DS::DSU dsu(4);
+	EXPECT_EQ(dsu.find(0), 0);
+	EXPECT_EQ(dsu.find(1), 1);
+	EXPECT_EQ(dsu.find(2), 2);
+	EXPECT_EQ(dsu.find(3), 3);
+}
+
+TEST(DSUTests, UniteConnectsTwoElements) {
+	DS::DSU dsu(3);
+	dsu.unite(0, 1);
+	EXPECT_EQ(dsu.find(0), dsu.find(1));
+	EXPECT_NE(dsu.find(0), dsu.find(2));
+}
+
+TEST(DSUTests, UniteConnectsChains) {
+	DS::DSU dsu(4);
+	dsu.unite(0, 1);
+	dsu.unite(2, 3);
+	dsu.unite(1, 2);
+	EXPECT_EQ(dsu.find(0), dsu.find(3));
+}
+
+TEST(DSUTests, UniteSameElementKeepsSetIntact) {
+	DS::DSU dsu(2);
+	dsu.unite(1, 1);
+	EXPECT_EQ(dsu.find(0), 0);
+	EXPECT_EQ(dsu.find(1), 1);
+	EXPECT_NE(dsu.find(0), dsu.find(1));
 }
 
 int main(int argc, char **argv) {
