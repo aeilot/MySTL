@@ -28,11 +28,14 @@ namespace DS {
 	public:
 		explicit Stack(int init_capacity = 8)
 			: capacity(init_capacity), top_ptr(0) {
-			data = new T[capacity];
+			data = static_cast<T*>(operator new(init_capacity * sizeof(T)));
 		}
 
 		~Stack() {
-			delete[] data;
+			while (!empty()) {
+				pop();
+			}
+			operator delete(data);
 		}
 
 		Stack(const Stack&) = delete;

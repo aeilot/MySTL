@@ -33,11 +33,12 @@ namespace DS {
     public:
         explicit Deque(int init_capacity = 8)
             : capacity(init_capacity), head(0), tail(0), count(0) {
-            data = new T[capacity];
+            data = static_cast<T*>(operator new(init_capacity * sizeof(T)));
         }
 
         ~Deque() {
-            delete[] data;
+            while (!empty()) pop_front();
+        	operator delete(data);
         }
 
         Deque(const Deque&) = delete;
