@@ -21,6 +21,7 @@ add_executable(my_stl test.cpp
         include/deque.h
         include/map.h
         include/dsu.h
+        include/trie.h
 )
 
 target_link_libraries(

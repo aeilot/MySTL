@@ -5,6 +5,7 @@
 #include "include/deque.h"
 #include "include/map.h"
 #include "include/dsu.h"
+#include "include/trie.h"
 
 TEST(StackTests, EmptyOnNewStack) {
 	DS::Stack<int> stack(2);
@@ -193,6 +194,39 @@ TEST(DSUTests, UniteSameElementKeepsSetIntact) {
 	EXPECT_EQ(dsu.find(0), 0);
 	EXPECT_EQ(dsu.find(1), 1);
 	EXPECT_NE(dsu.find(0), dsu.find(1));
+}
+
+TEST(TrieTests, EmptyTrieFindReturnsZero) {
+	DS::Trie trie;
+	EXPECT_EQ(trie.find("apple"), 0);
+}
+
+TEST(TrieTests, InsertThenFindReturnsCount) {
+	DS::Trie trie;
+	trie.insert("apple");
+	EXPECT_EQ(trie.find("apple"), 1);
+}
+
+TEST(TrieTests, InsertSameWordMultipleTimesCountsOccurrences) {
+	DS::Trie trie;
+	trie.insert("apple");
+	trie.insert("apple");
+	EXPECT_EQ(trie.find("apple"), 2);
+}
+
+TEST(TrieTests, FindPrefixWithoutExactWordReturnsZero) {
+	DS::Trie trie;
+	trie.insert("apple");
+	EXPECT_EQ(trie.find("app"), 0);
+}
+
+TEST(TrieTests, DistinguishesDifferentWords) {
+	DS::Trie trie;
+	trie.insert("apple");
+	trie.insert("app");
+	EXPECT_EQ(trie.find("apple"), 1);
+	EXPECT_EQ(trie.find("app"), 1);
+	EXPECT_EQ(trie.find("apples"), 0);
 }
 
 int main(int argc, char **argv) {
