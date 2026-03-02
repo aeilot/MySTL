@@ -16,6 +16,9 @@ enable_testing()
 
 
 add_executable(my_stl test.cpp
+        include/stack.h
+        include/queue.h
+        include/deque.h
 )
 
 target_link_libraries(
