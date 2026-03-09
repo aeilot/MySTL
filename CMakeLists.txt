@@ -22,6 +22,9 @@ add_executable(my_stl test.cpp
         include/map.h
         include/dsu.h
         include/trie.h
+        include/list/vector.h
+        include/list/list.h
+        include/concept.h
 )
 
 target_link_libraries(
