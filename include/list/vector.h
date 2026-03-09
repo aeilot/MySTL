@@ -22,6 +22,16 @@ namespace DS {
 		size_t currentSize;
 		size_t currentCapacity;
 	public:
+		using iterator = T*;
+		using const_iterator = const T*;
+		using value_type = T;
+		using reference = T&;
+		using const_reference = const T&;
+		using pointer = T*;
+		using const_pointer = const T*;
+		using size_type = size_t;
+		using difference_type = ptrdiff_t;
+
 		size_t size() const noexcept {
 			return currentSize;
 		}
@@ -115,10 +125,13 @@ namespace DS {
 			return currentSize;
 		}
 
-		T& at(const size_t i) const {
-			if (i >= currentSize) {
-				throw std::out_of_range("index out of range");
-			}
+		T& at(size_t i) {
+			if (i >= currentSize) throw std::out_of_range("index out of range");
+			return data[i];
+		}
+
+		const T& at(size_t i) const {
+			if (i >= currentSize) throw std::out_of_range("index out of range");
 			return data[i];
 		}
 
@@ -270,6 +283,22 @@ namespace DS {
 				}
 			}
 			return std::nullopt;
+		}
+
+		iterator begin() noexcept {
+			return data;
+		}
+
+		iterator end() noexcept {
+			return data + currentSize;
+		}
+
+		const_iterator begin() const noexcept {
+			return data;
+		}
+
+		const_iterator end() const noexcept {
+			return data + currentSize;
 		}
 	};
 }

@@ -17,7 +17,8 @@ namespace DS {
 		virtual void remove(size_t i) = 0;
 		virtual size_t length() const noexcept = 0;
 		virtual std::optional<size_t> search(const T& x) const = 0;
-		virtual T& at(size_t i) const = 0;
+		virtual T& at(size_t i) = 0;
+		virtual const T& at(size_t i) const = 0;
 	};
 
 }
