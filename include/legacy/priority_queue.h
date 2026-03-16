@@ -32,16 +32,16 @@ private:
 	}
 
 	void down(int id) {
-		int n = static_cast<int>(PQ.size()) - 1;
+		int n = static_cast<int>(PQ.size());
 		while (true) {
 			int l = getLFT(id);
 			int r = getRFT(id);
 			int largest = id;
 
-			if (l <= n && PQ[l] > PQ[largest]) {
+			if (l < n && PQ[l] > PQ[largest]) {
 				largest = l;
 			}
-			if (r <= n && PQ[r] > PQ[largest]) {
+			if (r < n && PQ[r] > PQ[largest]) {
 				largest = r;
 			}
 
