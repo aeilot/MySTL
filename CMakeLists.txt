@@ -25,6 +25,7 @@ add_executable(my_stl test.cpp
         include/list/vector.h
         include/list/list.h
         include/concept.h
+        include/list/linkedlist.h
 )
 
 target_link_libraries(

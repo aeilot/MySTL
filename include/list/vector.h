@@ -21,6 +21,7 @@ namespace DS {
 		T* data;
 		size_t currentSize;
 		size_t currentCapacity;
+
 	public:
 		using iterator = T*;
 		using const_iterator = const T*;
@@ -158,7 +159,7 @@ namespace DS {
 					new (newData + i) T(std::move_if_noexcept(data[i]));
 				}
 			} catch (...) {
-				for (size_t j = 0; j < i; ++j) newData[j].~T();
+				for (size_t j = 0; j < i; j++) newData[j].~T();
 				::operator delete(newData);
 				throw;
 			}
