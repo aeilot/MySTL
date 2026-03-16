@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "include/smart/queue.h"
-#include "include/legacy/stack.h"
+#include "include/smart/stack.h"
 #include "include/smart/deque.h"
 #include "include/legacy/map.h"
 #include "include/legacy/dsu.h"
