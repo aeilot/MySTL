@@ -16,9 +16,9 @@ enable_testing()
 
 
 add_executable(my_stl test.cpp
-        include/legacy/stack.h
-        include/legacy/queue.h
-        include/legacy/deque.h
+        include/smart/stack.h
+        include/smart/queue.h
+        include/smart/deque.h
         include/legacy/map.h
         include/legacy/dsu.h
         include/legacy/trie.h

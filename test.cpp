@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "include/legacy/queue.h"
+#include "include/smart/queue.h"
 #include "include/legacy/stack.h"
-#include "include/legacy/deque.h"
+#include "include/smart/deque.h"
 #include "include/legacy/map.h"
 #include "include/legacy/dsu.h"
 #include "include/legacy/trie.h"
