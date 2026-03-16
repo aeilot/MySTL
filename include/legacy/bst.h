@@ -13,6 +13,7 @@ private:
 		int value{};
 		TreeNode *left = nullptr;
 		TreeNode *right = nullptr;
+		TreeNode *parent = nullptr;
 	};
 
 	TreeNode *root;
@@ -122,8 +123,10 @@ public:
 			y = x;
 			if (t->value < x->value) {
 				x = x->left;
-			} else {
+			} else if (t->value > x->value) {
 				x = x->right;
+			} else {
+				return;
 			}
 		}
 		if (y==nullptr) {
@@ -133,6 +136,7 @@ public:
 		} else {
 			y->right = t;
 		}
+		t->parent = y;
 	}
 
 	bool search(int value) const {
@@ -153,7 +157,7 @@ public:
 	void remove(int value) {
 		root = removeNode(value, root);
 	}
-
+	
 	int getMax() const {
 		TreeNode* x = root;
 		if (x==nullptr) {

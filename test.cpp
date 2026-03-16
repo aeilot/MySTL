@@ -675,7 +675,7 @@ TEST_F(BSTTest, RemoveTest) {
 	EXPECT_TRUE(bst.search(80));
 }
 
-// 4. 测试重复插入（虽然你的实现目前按右子树处理）
+// 4. 测试重复插入
 TEST_F(BSTTest, DuplicateInsert) {
 	bst.insert(10);
 	bst.insert(10);
@@ -683,7 +683,7 @@ TEST_F(BSTTest, DuplicateInsert) {
 	bst.remove(10);
 	// 第一次删除后，由于插入了两次，通常期望还能搜到或彻底消失，
 	// 取决于你的逻辑，这里测试其稳定性
-	EXPECT_NO_THROW(bst.search(10));
+	EXPECT_FALSE(bst.search(10));
 }
 
 // 5. 测试空树操作（边界条件）
