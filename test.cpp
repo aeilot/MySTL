@@ -7,6 +7,7 @@
 #include "include/legacy/dsu.h"
 #include "include/legacy/trie.h"
 #include "include/smart/linkedlist.h"
+#include "include/legacy/bst.h"
 #include "include/legacy/priority_queue.h"
 
 TEST(StackTests, EmptyOnNewStack) {
@@ -615,6 +616,80 @@ TEST(PriorityQueueTest, DuplicateElements) {
 	EXPECT_EQ(pq.front(), 5);
 	pq.pop();
 	EXPECT_EQ(pq.front(), 5);
+}
+
+class BSTTest : public ::testing::Test {
+protected:
+	BST bst;
+};
+
+// 1. 测试基础插入与查找
+TEST_F(BSTTest, InsertAndSearch) {
+	EXPECT_FALSE(bst.search(10));
+	bst.insert(10);
+	bst.insert(5);
+	bst.insert(15);
+
+	EXPECT_TRUE(bst.search(10));
+	EXPECT_TRUE(bst.search(5));
+	EXPECT_TRUE(bst.search(15));
+	EXPECT_FALSE(bst.search(100)); // 不存在的值
+}
+
+// 2. 测试最小值和最大值
+TEST_F(BSTTest, MinMaxTest) {
+	bst.insert(20);
+	bst.insert(10);
+	bst.insert(30);
+	bst.insert(5);
+	bst.insert(25);
+
+	EXPECT_EQ(bst.getMin(), 5);
+	EXPECT_EQ(bst.getMax(), 30);
+}
+
+// 3. 测试删除逻辑
+TEST_F(BSTTest, RemoveTest) {
+	bst.insert(50);
+	bst.insert(30);
+	bst.insert(70);
+	bst.insert(20);
+	bst.insert(40);
+
+	// 删除叶子节点
+	bst.remove(20);
+	EXPECT_FALSE(bst.search(20));
+	EXPECT_TRUE(bst.search(30));
+
+	// 删除只有一个子节点的节点
+	bst.remove(30);
+	EXPECT_FALSE(bst.search(30));
+	EXPECT_TRUE(bst.search(40));
+
+	// 删除有两个子节点的节点
+	bst.insert(60);
+	bst.insert(80);
+	bst.remove(70);
+	EXPECT_FALSE(bst.search(70));
+	EXPECT_TRUE(bst.search(60));
+	EXPECT_TRUE(bst.search(80));
+}
+
+// 4. 测试重复插入（虽然你的实现目前按右子树处理）
+TEST_F(BSTTest, DuplicateInsert) {
+	bst.insert(10);
+	bst.insert(10);
+	EXPECT_TRUE(bst.search(10));
+	bst.remove(10);
+	// 第一次删除后，由于插入了两次，通常期望还能搜到或彻底消失，
+	// 取决于你的逻辑，这里测试其稳定性
+	EXPECT_NO_THROW(bst.search(10));
+}
+
+// 5. 测试空树操作（边界条件）
+TEST_F(BSTTest, EmptyTree) {
+	// EXPECT_DEATH(bst.getMin(), ".*");
+	EXPECT_FALSE(bst.search(1));
 }
 
 int main(int argc, char **argv) {

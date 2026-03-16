@@ -27,6 +27,7 @@ add_executable(my_stl test.cpp
         include/concept.h
         include/smart/linkedlist.h
         include/legacy/priority_queue.h
+        include/legacy/bst.h
 )
 
 target_link_libraries(
