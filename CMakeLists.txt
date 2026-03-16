@@ -16,16 +16,17 @@ enable_testing()
 
 
 add_executable(my_stl test.cpp
-        include/stack.h
-        include/queue.h
-        include/deque.h
-        include/map.h
-        include/dsu.h
-        include/trie.h
-        include/list/vector.h
-        include/list/list.h
+        include/legacy/stack.h
+        include/legacy/queue.h
+        include/legacy/deque.h
+        include/legacy/map.h
+        include/legacy/dsu.h
+        include/legacy/trie.h
+        include/smart/vector.h
+        include/smart/list.h
         include/concept.h
-        include/list/linkedlist.h
+        include/smart/linkedlist.h
+        include/legacy/priority_queue.h
 )
 
 target_link_libraries(

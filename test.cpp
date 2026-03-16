@@ -1,12 +1,13 @@
 #include <gtest/gtest.h>
 
-#include "include/queue.h"
-#include "include/stack.h"
-#include "include/deque.h"
-#include "include/map.h"
-#include "include/dsu.h"
-#include "include/trie.h"
-#include "include/list/linkedlist.h"
+#include "include/legacy/queue.h"
+#include "include/legacy/stack.h"
+#include "include/legacy/deque.h"
+#include "include/legacy/map.h"
+#include "include/legacy/dsu.h"
+#include "include/legacy/trie.h"
+#include "include/smart/linkedlist.h"
+#include "include/legacy/priority_queue.h"
 
 TEST(StackTests, EmptyOnNewStack) {
 	DS::Stack<int> stack(2);
@@ -231,7 +232,7 @@ TEST(TrieTests, DistinguishesDifferentWords) {
 }
 
 
-#include "include/list/vector.h"
+#include "include/smart/vector.h"
 
 using DS::vector;
 
@@ -533,6 +534,87 @@ TEST_F(LinkedListTest, SearchFunctionality) {
 
     auto fail_result = list_with_data.search(999);
     EXPECT_FALSE(fail_result.has_value());
+}
+
+// 测试基础状态：空队列
+TEST(PriorityQueueTest, BasicStatus) {
+	PriorityQueue pq;
+	EXPECT_TRUE(pq.empty());
+	EXPECT_EQ(pq.size(), 0);
+}
+
+// 测试单元素入队
+TEST(PriorityQueueTest, SinglePush) {
+	PriorityQueue pq;
+	pq.push(10);
+	EXPECT_FALSE(pq.empty());
+	EXPECT_EQ(pq.size(), 1);
+	EXPECT_EQ(pq.front(), 10);
+}
+
+// 测试大根堆属性 (最大值始终在顶部)
+TEST(PriorityQueueTest, MaxHeapProperty) {
+	PriorityQueue pq;
+	pq.push(10);
+	pq.push(30);
+	pq.push(20);
+	pq.push(5);
+	pq.push(25);
+
+	// 此时最大值应该是 30
+	EXPECT_EQ(pq.front(), 30);
+	EXPECT_EQ(pq.size(), 5);
+}
+
+// 测试出队逻辑
+TEST(PriorityQueueTest, PopLogic) {
+	PriorityQueue pq = {10, 30, 20, 5, 25};
+
+	EXPECT_EQ(pq.front(), 30);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 25);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 20);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 10);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 5);
+	pq.pop();
+
+	EXPECT_TRUE(pq.empty());
+	EXPECT_EQ(pq.size(), 0);
+}
+
+// 测试初始化列表构造函数
+TEST(PriorityQueueTest, InitializerList) {
+	PriorityQueue pq = {1, 5, 2, 4, 3};
+	EXPECT_EQ(pq.size(), 5);
+	EXPECT_EQ(pq.front(), 5);
+}
+
+// 测试异常处理
+TEST(PriorityQueueTest, ExceptionHandling) {
+	PriorityQueue pq;
+
+	// 空队列调用 front() 应该抛出异常
+	EXPECT_THROW(pq.front(), std::out_of_range);
+
+	// 空队列调用 pop() 应该抛出异常
+	EXPECT_THROW(pq.pop(), std::out_of_range);
+
+	pq.push(1);
+	pq.pop();
+	EXPECT_THROW(pq.front(), std::out_of_range);
+}
+
+// 测试大量重复元素
+TEST(PriorityQueueTest, DuplicateElements) {
+	PriorityQueue pq = {5, 5, 5, 1, 10};
+	EXPECT_EQ(pq.front(), 10);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 5);
+	pq.pop();
+	EXPECT_EQ(pq.front(), 5);
 }
 
 int main(int argc, char **argv) {
