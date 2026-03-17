@@ -157,7 +157,7 @@ public:
 	void remove(int value) {
 		root = removeNode(value, root);
 	}
-	
+
 	int getMax() const {
 		TreeNode* x = root;
 		if (x==nullptr) {
