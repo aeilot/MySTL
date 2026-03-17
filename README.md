@@ -65,4 +65,4 @@ This repository is a hands-on implementation of common STL-like containers and a
 
 ## License
 
-Unless otherwise noted, code in this repo is covered by the MIT License (see `LICENSE` if present).
+MIT.
