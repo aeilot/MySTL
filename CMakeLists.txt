@@ -15,7 +15,17 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 
-add_executable(my_stl test.cpp
+add_executable(my_stl
+        tests/stack_test.cpp
+        tests/queue_test.cpp
+        tests/deque_test.cpp
+        tests/map_test.cpp
+        tests/dsu_test.cpp
+        tests/trie_test.cpp
+        tests/vector_test.cpp
+        tests/linkedlist_test.cpp
+        tests/priority_queue_test.cpp
+        tests/bst_test.cpp
         include/smart/stack.h
         include/smart/queue.h
         include/smart/deque.h
@@ -33,6 +43,11 @@ add_executable(my_stl test.cpp
 target_link_libraries(
         my_stl
         GTest::gtest_main
+)
+
+target_include_directories(
+        my_stl
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 include(GoogleTest)
