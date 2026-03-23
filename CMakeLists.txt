@@ -38,6 +38,7 @@ add_executable(my_stl
         include/smart/linkedlist.h
         include/legacy/priority_queue.h
         include/legacy/bst.h
+        include/legacy/splay.h
 )
 
 target_link_libraries(

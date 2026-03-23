@@ -60,6 +60,7 @@ private:
 				x = x->left;
 			}
 		}
+		delete x;
 		return nullptr;
 	}
 
@@ -151,6 +152,7 @@ public:
 				x = x->left;
 			}
 		}
+		delete x;
 		return false;
 	}
 
