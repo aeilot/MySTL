@@ -282,6 +282,7 @@ namespace DS {
 					splay(x);
 					return x->value;
 				} else {
+					// When entering the right, we must update k.
 					k -= (leftSize + 1);
 					x = x->right;
 				}

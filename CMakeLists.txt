@@ -26,6 +26,7 @@ add_executable(my_stl
         tests/linkedlist_test.cpp
         tests/priority_queue_test.cpp
         tests/bst_test.cpp
+        tests/splay_test.cpp
         include/smart/stack.h
         include/smart/queue.h
         include/smart/deque.h
