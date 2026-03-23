@@ -1,67 +1,84 @@
 # My Data Structures
 
-This repository is a hands-on implementation of common STL-like containers and algorithms in idiomatic C++20. Every module is built with clarity, modern language features, and an eye toward learning how the core data structures behave under the hood.
+This repository is a study-oriented collection of STL-inspired data structures written in modern C++. The goal is to build familiar containers and classic supporting structures from scratch, then validate them with GoogleTest-based coverage.
 
-## Status
+## What Is Here
 
-### Implemented
-- `SequentialList` (vector wrapper with controlled resizing)
-- `LinkedList` (double/singly linked nodes and iterators)
-- `Stack` (LIFO container built on top of the list primitives)
-- `Queue` (FIFO queue with customizable allocator support)
-- `BinaryHeap` (array-based min/max heap with sift operations)
-- `DisjointSetUnion` (union-find with path compression)
-- `HashTable` (open addressing + linear probing)
-- `BinarySearchTree` (BST with traversal helpers)
-- `Splay Tree`
+The codebase is currently split into two groups:
 
-### Planned
-- Huffman Tree
-- Leftist Heap
-- Skew Heap
-- Double-Ended Heap (Min-Max Heap)
-- Static Search Table
-- AVL Tree
-- Red-Black Tree
-- AA Tree
-- B-Tree / B+ Tree
-- Advanced Disjoint Set variants
-- Fibonacci Heap
+- `include/smart/`: container-style implementations such as `Stack`, `Queue`, `Deque`, `list`, `vector`, and `LinkedList`.
+- `include/legacy/`: classic data structures such as `DSU`, `Trie`, `Map`, `PriorityQueue`, `BST`, and `SplayTree`.
 
-## Build & Run
+## Current Coverage
 
-1. Configure the project with CMake (requires a working C++20 toolchain):
+### Implemented and tested
 
-   ```sh
-   cmake -S . -B build
-   ```
+- `Stack`
+- `Queue`
+- `Deque`
+- `list`
+- `vector`
+- `LinkedList`
+- `DSU`
+- `Trie`
+- `Map`
+- `PriorityQueue`
+- `BST`
+- `SplayTree`
 
-2. Build everything:
+### Planned or worth expanding
 
-   ```sh
-   cmake --build build
-   ```
+- AVL tree
+- Red-black tree
+- B-tree or B+ tree
+- Fibonacci heap
+- Leftist heap
+- Skew heap
+- More hash-based containers
+- Benchmarks against STL equivalents
 
-3. Run the executable for experimentation or add new tests via `test.cpp` (the repository currently uses this file as a scratchpad for validating the containers).
+## Build
+
+Requirements:
+
+- CMake 4.0+
+- A compiler with C++23 support
+- Internet access on the first configure so CMake can fetch GoogleTest
+
+Configure and build:
+
+```sh
+cmake -S . -B build
+cmake --build build
+```
+
+## Run Tests
+
+This project uses GoogleTest with CMake test discovery.
+
+```sh
+ctest --test-dir build --output-on-failure
+```
+
+You can also run the compiled test binary directly after building:
+
+```sh
+./build/my_stl
+```
 
 ## Repository Layout
 
-- `include/`: public headers containing the current data structures and helpers.
-- `test.cpp`: scratch space for manual verification and proof-of-concept demos.
-- `CMakeLists.txt`: top-level build configuration that pulls in the headers and links the playground executable.
+- `include/`: header implementations for all containers and supporting concepts
+- `include/smart/`: STL-like container implementations
+- `include/legacy/`: classic tree, graph, and associative structures
+- `tests/`: GoogleTest suites for each implemented structure
+- `CMakeLists.txt`: top-level build and test configuration
 
-## Roadmap
+## Development Notes
 
-- Flesh out the remaining advanced heaps and balanced trees with the same build/testing approach.
-- Introduce benchmark suites that compare each container against the STL counterparts.
-- Package individual headers into a consumable study bundle with documentation.
-
-## Contributing
-
-1. Open an issue describing the structure you want to add or improve.
-2. Follow the existing style (header-only, expressive unit tests in `test.cpp`).
-3. Update the status list above so the roadmap reflects your work.
-4. Submit a pull request; mention any backwards-incompatible API changes in the description.
+- The project is currently header-driven, with tests compiled into a single `my_stl` executable.
+- New structures should generally include matching coverage in `tests/`.
+- If you add a new container, update this README so the implementation list stays accurate.
 
 ## License
 
