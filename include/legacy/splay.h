@@ -288,7 +288,7 @@ namespace DS {
 			}
 			throw std::logic_error("Should not reach here");
 		}
-		
+
 		// Get the ranking of value
 		int getRank(int value) {
 			TreeNode* x = root;

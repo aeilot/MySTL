@@ -13,6 +13,7 @@ This repository is a hands-on implementation of common STL-like containers and a
 - `DisjointSetUnion` (union-find with path compression)
 - `HashTable` (open addressing + linear probing)
 - `BinarySearchTree` (BST with traversal helpers)
+- `Splay Tree`
 
 ### Planned
 - Huffman Tree
@@ -23,7 +24,6 @@ This repository is a hands-on implementation of common STL-like containers and a
 - AVL Tree
 - Red-Black Tree
 - AA Tree
-- Splay Tree
 - B-Tree / B+ Tree
 - Advanced Disjoint Set variants
 - Fibonacci Heap
