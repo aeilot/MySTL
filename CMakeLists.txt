@@ -16,6 +16,7 @@ enable_testing()
 
 
 add_executable(my_stl
+        tests/huffman_test.cpp
         tests/stack_test.cpp
         tests/queue_test.cpp
         tests/deque_test.cpp
@@ -40,6 +41,7 @@ add_executable(my_stl
         include/legacy/priority_queue.h
         include/legacy/bst.h
         include/legacy/splay.h
+        include/legacy/huffman.h
 )
 
 target_link_libraries(
